@@ -1,0 +1,15 @@
+baseURL = "https://daylily-7.github.io/"
+title = "我的个人博客"
+theme = "PaperMod"
+languageCode = "zh-cn"
+
+[params]
+    description = "这是我的个人博客，记录生活与思考"
+    author = "Daylily"
+    hideMeta = true
+    showPosts = true
+
+[[menu.main]]
+    name = "首页"
+    url = "/"
+    weight = 1
