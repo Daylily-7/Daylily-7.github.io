@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>我的个人博客</title><link>https://daylily-7.github.io/</link><description>Recent content on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 30 Jul 2026 18:59:53 +0800</lastBuildDate><atom:link href="https://daylily-7.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>个人博客出现的问题及解决</title><link>https://daylily-7.github.io/posts/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</link><pubDate>Thu, 30 Jul 2026 18:59:53 +0800</pubDate><guid>https://daylily-7.github.io/posts/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</guid><description>&lt;p&gt;2026年7月29日，我花了大半天时间，只为把第二篇文章发布到博客上。从404到首页不显示，从文件丢失到网络超时，这篇文章记录了我遇到的所有问题和解决办法&lt;/p&gt;
 &lt;hr&gt;
-&lt;p&gt;一、坑一：文章发布后，首页不显示
-*问题现象：
+&lt;p&gt;一、坑一：文章发布后，首页不显示&lt;/p&gt;
+&lt;p&gt;*问题现象：
 执行完 &lt;code&gt;hugo&lt;/code&gt; 和 &lt;code&gt;git push&lt;/code&gt; 后，访问博客首页，只能看到第一篇文章，第二篇文章没有出现
 *排查过程：
 第一步，检查 &lt;code&gt;content/posts/&lt;/code&gt; 文件夹里是否有第二篇文章的文件&lt;/p&gt;
@@ -12,11 +12,11 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;查看文件开头的 &lt;code&gt;draft&lt;/code&gt; 字段（如果是 &lt;code&gt;true&lt;/code&gt;，Hugo 就不会生成它，必须改成 &lt;code&gt;false&lt;/code&gt;）但是已经被我改成false了，这里没问题&lt;/p&gt;
 &lt;p&gt;第三步，检查 &lt;code&gt;public/posts/&lt;/code&gt; 文件夹&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;ls public/posts/
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果没有第二篇文章对应的文件夹，说明 &lt;code&gt;hugo&lt;/code&gt; 命令没有正确生成它&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;（如果没有第二篇文章对应的文件夹，说明 &lt;code&gt;hugo&lt;/code&gt; 命令没有正确生成它）显示找不到该文件夹&lt;/p&gt;
 &lt;p&gt;*解决办法：
 确保 &lt;code&gt;draft: false&lt;/code&gt; 后，重新执行：&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;hugo --minify --cleanDestinationDir
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后再检查 &lt;code&gt;public/posts/&lt;/code&gt;，确认生成了文章文件夹&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后再检查 &lt;code&gt;public/posts/&lt;/code&gt;，才确认生成了文章文件夹&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;二、坑二：主题文件夹丢失
 *问题现象：
