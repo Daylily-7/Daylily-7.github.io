@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Daylily's Blog</title><link>https://daylily-7.github.io/posts/</link><description>Recent content in Posts on Daylily's Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 30 Jul 2026 18:59:53 +0800</lastBuildDate><atom:link href="https://daylily-7.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>个人博客出现的问题及解决</title><link>https://daylily-7.github.io/posts/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</link><pubDate>Thu, 30 Jul 2026 18:59:53 +0800</pubDate><guid>https://daylily-7.github.io/posts/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</guid><description>&lt;p&gt;2026年7月29日，我花了大半天时间，只为把第二篇文章发布到博客上。从404到首页不显示，从文件丢失到网络超时，这篇文章记录了我遇到的所有问题和解决办法&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;一、坑一：文章发布后，首页不显示&lt;/p&gt;
+&lt;p&gt;*问题现象：
+执行完 &lt;code&gt;hugo&lt;/code&gt; 和 &lt;code&gt;git push&lt;/code&gt; 后，访问博客首页，只能看到第一篇文章，第二篇文章没有出现
+*排查过程：
+第一步，检查 &lt;code&gt;content/posts/&lt;/code&gt; 文件夹里是否有第二篇文章的文件&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;ls content/posts/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;文件存在，说明没有丢失&lt;/p&gt;
+&lt;p&gt;第二步，检查文章的 &lt;code&gt;draft&lt;/code&gt; 状态&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;notepad content/posts/build-blog-notes.md
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;查看文件开头的 &lt;code&gt;draft&lt;/code&gt; 字段（如果是 &lt;code&gt;true&lt;/code&gt;，Hugo 就不会生成它，必须改成 &lt;code&gt;false&lt;/code&gt;）但是已经被我改成false了，这里没问题&lt;/p&gt;
+&lt;p&gt;第三步，检查 &lt;code&gt;public/posts/&lt;/code&gt; 文件夹&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;ls public/posts/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;（如果没有第二篇文章对应的文件夹，说明 &lt;code&gt;hugo&lt;/code&gt; 命令没有正确生成它）显示找不到该文件夹&lt;/p&gt;
+&lt;p&gt;*解决办法：
+确保 &lt;code&gt;draft: false&lt;/code&gt; 后，重新执行：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hugo --minify --cleanDestinationDir
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后再检查 &lt;code&gt;public/posts/&lt;/code&gt;，才确认生成了文章文件夹&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;二、坑二：主题文件夹丢失
+*问题现象：
+执行 &lt;code&gt;hugo&lt;/code&gt; 时，报错说找不到布局文件&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;WARN found no layout file for &amp;#34;html&amp;#34; for kind &amp;#34;home&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;*原因分析：
+&lt;code&gt;themes/PaperMod&lt;/code&gt; 文件夹被清空或不存在了，我怀疑是在 &lt;code&gt;main&lt;/code&gt; 分支和 &lt;code&gt;gh-pages&lt;/code&gt; 分支之间切换时，文件被覆盖或丢失了&lt;/p&gt;
+&lt;p&gt;*解决办法：
+重新把主题文件夹放回 &lt;code&gt;themes/&lt;/code&gt; 目录
+第一步，确认主题文件夹是否存在&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;ls themes
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;发现 &lt;code&gt;PaperMod&lt;/code&gt; 是空的，又需要把它重新放进去&lt;/p&gt;</description></item><item><title>从零搭建个人博客：我的 Hugo + GitHub Pages 折腾笔记</title><link>https://daylily-7.github.io/posts/build-blog-notes/</link><pubDate>Wed, 29 Jul 2026 16:26:31 +0800</pubDate><guid>https://daylily-7.github.io/posts/build-blog-notes/</guid><description>&lt;p&gt;+++
+date = &amp;lsquo;2026-07-29T16:26:31+08:00&amp;rsquo;
+draft = false
+title = &amp;lsquo;从零搭建个人博客：我的 Hugo + GitHub Pages 折腾笔记&amp;rsquo;
++++&lt;/p&gt;
+&lt;p&gt;从零搭建个人博客：我的 Hugo + GitHub Pages 折腾笔记&lt;/p&gt;
+&lt;p&gt;2026年7月28和29日，我花了两天时间，从完全不懂到拥有一个属于自己的个人博客&lt;/p&gt;
+&lt;p&gt;这篇文章用以记录我遇到的坑和解决办法&lt;/p&gt;
+&lt;p&gt;一．准备工作：安装工具&lt;/p&gt;
+&lt;p&gt;1.安装 Hugo（静态网站生成器）
+Hugo 的作用：把我写的 Markdown 文章转换成 HTML 网页
+我用 Windows 的包管理器 Scoop 安装
+1.安装 Scoop
+打开一个普通权限的 PowerShell 窗口（注意：不要用管理员权限），依次执行：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+irm get.scoop.sh | iex
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.安装 Hugo：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;scoop install hugo-extended
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.验证是否安装成功：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hugo version
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果看到版本号，说明安装成功了
+（我第一次用管理员权限运行 PowerShell 安装 Scoop 失败了，提示&amp;quot;禁止以管理员身份运行&amp;quot;，解决方法是关掉管理员窗口，用普通权限的 PowerShell 重新执行）&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;安装 Git
+Git 用来把代码推送到 GitHub。
+1.安装 Git：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;scoop install git
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.验证是否安装成功：&lt;/p&gt;</description></item><item><title/><link>https://daylily-7.github.io/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://daylily-7.github.io/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</guid><description>&lt;p&gt;-&amp;ndash;&lt;/p&gt;
+&lt;p&gt;title: &amp;ldquo;我的第一篇文章&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;date: 2026-07-28T22:47:34+08:00&lt;/p&gt;
+&lt;p&gt;draft: false&lt;/p&gt;
+&lt;p&gt;-&amp;ndash;&lt;/p&gt;
+&lt;p&gt;## Hello World！梦从这里开始——&lt;/p&gt;
+&lt;p&gt;这是我的第一篇博客文章，欢迎来到我的个人博客！&lt;/p&gt;</description></item></channel></rss>

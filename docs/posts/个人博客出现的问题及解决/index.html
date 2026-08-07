@@ -1,0 +1,131 @@
+<!doctype html><html lang=en dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>个人博客出现的问题及解决 | Daylily's Blog</title><meta name=keywords content><meta name=description content='2026年7月29日，我花了大半天时间，只为把第二篇文章发布到博客上。从404到首页不显示，从文件丢失到网络超时，这篇文章记录了我遇到的所有问题和解决办法
+
+一、坑一：文章发布后，首页不显示
+*问题现象：
+执行完 hugo 和 git push 后，访问博客首页，只能看到第一篇文章，第二篇文章没有出现
+*排查过程：
+第一步，检查 content/posts/ 文件夹里是否有第二篇文章的文件
+ls content/posts/
+文件存在，说明没有丢失
+第二步，检查文章的 draft 状态
+notepad content/posts/build-blog-notes.md
+查看文件开头的 draft 字段（如果是 true，Hugo 就不会生成它，必须改成 false）但是已经被我改成false了，这里没问题
+第三步，检查 public/posts/ 文件夹
+ls public/posts/
+（如果没有第二篇文章对应的文件夹，说明 hugo 命令没有正确生成它）显示找不到该文件夹
+*解决办法：
+确保 draft: false 后，重新执行：
+hugo --minify --cleanDestinationDir
+然后再检查 public/posts/，才确认生成了文章文件夹
+
+二、坑二：主题文件夹丢失
+*问题现象：
+执行 hugo 时，报错说找不到布局文件
+WARN found no layout file for "html" for kind "home"
+*原因分析：
+themes/PaperMod 文件夹被清空或不存在了，我怀疑是在 main 分支和 gh-pages 分支之间切换时，文件被覆盖或丢失了
+*解决办法：
+重新把主题文件夹放回 themes/ 目录
+第一步，确认主题文件夹是否存在
+ls themes
+发现 PaperMod 是空的，又需要把它重新放进去'><meta name=author content="Daylily"><link rel=canonical href=https://daylily-7.github.io/posts/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/><link crossorigin=anonymous href=/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as=style><link rel=icon href=https://daylily-7.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://daylily-7.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://daylily-7.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://daylily-7.github.io/apple-touch-icon.png><link rel=mask-icon href=https://daylily-7.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://daylily-7.github.io/posts/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta property="og:url" content="https://daylily-7.github.io/posts/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/"><meta property="og:site_name" content="Daylily's Blog"><meta property="og:title" content="个人博客出现的问题及解决"><meta property="og:description" content='2026年7月29日，我花了大半天时间，只为把第二篇文章发布到博客上。从404到首页不显示，从文件丢失到网络超时，这篇文章记录了我遇到的所有问题和解决办法
+一、坑一：文章发布后，首页不显示
+*问题现象： 执行完 hugo 和 git push 后，访问博客首页，只能看到第一篇文章，第二篇文章没有出现 *排查过程： 第一步，检查 content/posts/ 文件夹里是否有第二篇文章的文件
+ls content/posts/ 文件存在，说明没有丢失
+第二步，检查文章的 draft 状态
+notepad content/posts/build-blog-notes.md 查看文件开头的 draft 字段（如果是 true，Hugo 就不会生成它，必须改成 false）但是已经被我改成false了，这里没问题
+第三步，检查 public/posts/ 文件夹
+ls public/posts/ （如果没有第二篇文章对应的文件夹，说明 hugo 命令没有正确生成它）显示找不到该文件夹
+*解决办法： 确保 draft: false 后，重新执行：
+hugo --minify --cleanDestinationDir 然后再检查 public/posts/，才确认生成了文章文件夹
+二、坑二：主题文件夹丢失 *问题现象： 执行 hugo 时，报错说找不到布局文件
+WARN found no layout file for "html" for kind "home" *原因分析： themes/PaperMod 文件夹被清空或不存在了，我怀疑是在 main 分支和 gh-pages 分支之间切换时，文件被覆盖或丢失了
+*解决办法： 重新把主题文件夹放回 themes/ 目录 第一步，确认主题文件夹是否存在
+ls themes 发现 PaperMod 是空的，又需要把它重新放进去'><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-07-30T18:59:53+08:00"><meta property="article:modified_time" content="2026-07-30T18:59:53+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="个人博客出现的问题及解决"><meta name=twitter:description content='2026年7月29日，我花了大半天时间，只为把第二篇文章发布到博客上。从404到首页不显示，从文件丢失到网络超时，这篇文章记录了我遇到的所有问题和解决办法
+一、坑一：文章发布后，首页不显示
+*问题现象： 执行完 hugo 和 git push 后，访问博客首页，只能看到第一篇文章，第二篇文章没有出现 *排查过程： 第一步，检查 content/posts/ 文件夹里是否有第二篇文章的文件
+ls content/posts/ 文件存在，说明没有丢失
+第二步，检查文章的 draft 状态
+notepad content/posts/build-blog-notes.md 查看文件开头的 draft 字段（如果是 true，Hugo 就不会生成它，必须改成 false）但是已经被我改成false了，这里没问题
+第三步，检查 public/posts/ 文件夹
+ls public/posts/ （如果没有第二篇文章对应的文件夹，说明 hugo 命令没有正确生成它）显示找不到该文件夹
+*解决办法： 确保 draft: false 后，重新执行：
+hugo --minify --cleanDestinationDir 然后再检查 public/posts/，才确认生成了文章文件夹
+二、坑二：主题文件夹丢失 *问题现象： 执行 hugo 时，报错说找不到布局文件
+WARN found no layout file for "html" for kind "home" *原因分析： themes/PaperMod 文件夹被清空或不存在了，我怀疑是在 main 分支和 gh-pages 分支之间切换时，文件被覆盖或丢失了
+*解决办法： 重新把主题文件夹放回 themes/ 目录 第一步，确认主题文件夹是否存在
+ls themes 发现 PaperMod 是空的，又需要把它重新放进去'><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://daylily-7.github.io/posts/"},{"@type":"ListItem","position":2,"name":"个人博客出现的问题及解决","item":"https://daylily-7.github.io/posts/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"个人博客出现的问题及解决","name":"个人博客出现的问题及解决","description":"2026年7月29日，我花了大半天时间，只为把第二篇文章发布到博客上。从404到首页不显示，从文件丢失到网络超时，这篇文章记录了我遇到的所有问题和解决办法\n一、坑一：文章发布后，首页不显示\n*问题现象： 执行完 hugo 和 git push 后，访问博客首页，只能看到第一篇文章，第二篇文章没有出现 *排查过程： 第一步，检查 content/posts/ 文件夹里是否有第二篇文章的文件\nls content/posts/ 文件存在，说明没有丢失\n第二步，检查文章的 draft 状态\nnotepad content/posts/build-blog-notes.md 查看文件开头的 draft 字段（如果是 true，Hugo 就不会生成它，必须改成 false）但是已经被我改成false了，这里没问题\n第三步，检查 public/posts/ 文件夹\nls public/posts/ （如果没有第二篇文章对应的文件夹，说明 hugo 命令没有正确生成它）显示找不到该文件夹\n*解决办法： 确保 draft: false 后，重新执行：\nhugo --minify --cleanDestinationDir 然后再检查 public/posts/，才确认生成了文章文件夹\n二、坑二：主题文件夹丢失 *问题现象： 执行 hugo 时，报错说找不到布局文件\nWARN found no layout file for \u0026#34;html\u0026#34; for kind \u0026#34;home\u0026#34; *原因分析： themes/PaperMod 文件夹被清空或不存在了，我怀疑是在 main 分支和 gh-pages 分支之间切换时，文件被覆盖或丢失了\n*解决办法： 重新把主题文件夹放回 themes/ 目录 第一步，确认主题文件夹是否存在\nls themes 发现 PaperMod 是空的，又需要把它重新放进去\n","keywords":[],"articleBody":"2026年7月29日，我花了大半天时间，只为把第二篇文章发布到博客上。从404到首页不显示，从文件丢失到网络超时，这篇文章记录了我遇到的所有问题和解决办法\n一、坑一：文章发布后，首页不显示\n*问题现象： 执行完 hugo 和 git push 后，访问博客首页，只能看到第一篇文章，第二篇文章没有出现 *排查过程： 第一步，检查 content/posts/ 文件夹里是否有第二篇文章的文件\nls content/posts/ 文件存在，说明没有丢失\n第二步，检查文章的 draft 状态\nnotepad content/posts/build-blog-notes.md 查看文件开头的 draft 字段（如果是 true，Hugo 就不会生成它，必须改成 false）但是已经被我改成false了，这里没问题\n第三步，检查 public/posts/ 文件夹\nls public/posts/ （如果没有第二篇文章对应的文件夹，说明 hugo 命令没有正确生成它）显示找不到该文件夹\n*解决办法： 确保 draft: false 后，重新执行：\nhugo --minify --cleanDestinationDir 然后再检查 public/posts/，才确认生成了文章文件夹\n二、坑二：主题文件夹丢失 *问题现象： 执行 hugo 时，报错说找不到布局文件\nWARN found no layout file for \"html\" for kind \"home\" *原因分析： themes/PaperMod 文件夹被清空或不存在了，我怀疑是在 main 分支和 gh-pages 分支之间切换时，文件被覆盖或丢失了\n*解决办法： 重新把主题文件夹放回 themes/ 目录 第一步，确认主题文件夹是否存在\nls themes 发现 PaperMod 是空的，又需要把它重新放进去\n第二步，从 GitHub 下载主题 ZIP 包 访问：https://github.com/adityatelange/hugo-PaperMod/archive/refs/heads/master.zip\n第三步，解压后重命名为 PaperMod，复制到 my-blog/themes/ 里面\n第四步，确认主题已就位\nls themes\\PaperMod\\layouts 可以看到 _default、_partials、_shortcodes 等文件夹就OK的\n三、坑三：点击文章链接出现 404 *问题现象： 首页显示了两篇文章的标题，但点击任意一篇文章，都跳转到 404 页面\n*原因分析： hugo.toml 里的 baseURL 写错了。我的 GitHub Pages 地址是 daylily-7.github.io，但配置里写的是 Daylily.github.io\n*解决办法：\n打开 hugo.toml，把第一行改成正确的地址\nbaseURL = \"https://daylily-7.github.io/\" 修改后重新生成并部署：\nhugo --minify --cleanDestinationDir 然后重新推送\n注意：我这样改完之后反而变成全站 404，应该是 gh-pages 分支被覆盖了，要重新部署一次\n四、坑四：配置文件 hugo.toml 经常消失\n*问题现象： 明明刚创建了 hugo.toml，执行 hugo 时却报错找不到配置文件\nERROR Unable to locate config file *原因分析： hugo.toml 属于 main 分支（源码分支），而 gh-pages 分支只存放生成的网页文件，当执行 git checkout gh-pages 时，工作目录切换到了 gh-pages 分支的内容，此时hugo.toml 自然就消失了，切回 main 分支才会回来\n*解决办法： 确认当前分支，切回 main\ngit branch git checkout main 然后重新创建 hugo.toml（发现确实丢了\nnotepad hugo.toml 把配置内容粘贴进去，保存\n五、坑五：git push 网络超时 *问题现象： 执行 git push origin main 时，报错：\nfatal: unable to access 'https://github.com/...': Failed to connect to github.com:443 *原因分析： GitHub 在国内访问不稳定，网络连接经常被重置\n*解决办法： 方案一：多试几次\ngit push origin main 连续尝试 3-5 次，有时候重试就能成功（我通过反复尝试成功了）\n方案二：换用 SSH 方式\ngit remote set-url origin git@github.com:Daylily-7/Daylily-7.github.io.git git push origin main 六、总结最终成功部署的完整流程： 第一步，确认在 main 分支\ngit checkout main 第二步，确认主题和配置文件都存在\nls themes\\PaperMod\\layouts ls hugo.toml 第三步，生成网站文件\nhugo --minify --cleanDestinationDir 第四步，删除旧的 docs 文件夹，用 public 替换\nRemove-Item -Recurse -Force docs Move-Item -Path public -Destination docs 第五步，添加到 Git 并推送\ngit add docs/ git commit -m \"更新博客\" git push origin main 第六步，等待 1-2 分钟，刷新博客\nhttps://daylily-7.github.io\n七、关于 gh-pages 和 docs 的选择\n一开始我用了 gh-pages 分支来部署，但反复出现 404 和各种问题。后来我改用了 docs 文件夹方式（把网站文件放在 main 分支的 docs 文件夹里），然后在 GitHub Pages 设置中把分支指向 main、文件夹指向 /docs\n这种方式更稳定，不容易出现分支切换导致文件丢失的问题\n八、经验总结\n1.遇到 404 先检查 baseURL 是否正确\n2.主题文件丢失是常见问题，尤其是在分支切换后，记得重新确认themes/PaperMod/layouts 是否存在\n3.hugo.toml 配置文件只存在于 main 分支，切到 gh-pages 分支后是看不到的，这是正常的。\n4.git push 网络超时是 GitHub 在国内的常态，多试几次或换 SSH 方式\n5.部署前一定要检查 public/posts/ 里是否生成了文章对应的文件夹\n九、为什么我之前会出问题以及如何避免\n*我的问题根源：分支切换导致文件混乱\n我的博客仓库有两个主要分支：\nmain 分支：存放原材料（文章 Markdown 文件、主题、配置文件 hugo.toml） gh-pages 分支：存放成品（hugo 生成的 HTML 网页文件） 我之前发布文章的流程是这样的：\n在 main 分支写文章，执行 hugo（生成 public 文件夹） 切换到 gh-pages 分支，把 public 里的文件复制过去 切回 main 分支修改配置 又切到 gh-pages 分支…… 来回切换几次后，Git 会提示文件冲突，拒绝切换。然后我执行了 git rm -rf . 强行清空，结果把当前分支的所有文件都删了\n最终结果：main 分支的原材料被清空，gh-pages 分支的成品也不完整，主页自然就 404 了\n*我现在用的方式：单分支 + docs 文件夹\n为了避免分支切换导致的问题，我现在改用更稳定的方式：\n永远在 main 分支工作 生成的成品放在 docs 文件夹里（而不是另一个分支） git push 把原材料和成品一起推上去 这样就不存在“来回切换导致文件丢失”的问题了。\n十、标准发布流程\n第一步：确认在 main 分支\ngit checkout main 第二步：写文章\nhugo new content posts/文章名.md 注意：文章名建议用英文，比如 my-third-post.md，避免中文编码问题\n第三步：编辑文章\nnotepad content/posts/文章名.md 做两件事：\n把 draft: true 改成 draft: false 在 --- 下方写正文 保存并关闭\n第四步：检查主题是否存在（防止主题丢失）\nls themes\\PaperMod\\layouts 如果提示找不到路径，说明主题丢了。把 PaperMod 文件夹重新复制到 themes\\ 里。\n第五步：生成网站文件\nhugo --minify --cleanDestinationDir 看输出结果里的 Pages 数量，应该是 8 或 11 个左右。如果只有 5 个，说明主题没加载上，回到第四步\n第六步：替换 docs 文件夹\nRemove-Item -Recurse -Force docs Move-Item -Path public -Destination docs 第七步：提交并推送\ngit add docs/ git commit -m \"发布新文章\" git push origin main 看输出里有没有 main -\u003e main，如果有，说明推送成功了\n第八步：刷新博客\n等待 1-2 分钟，访问 https://你的用户名.github.io，按 Ctrl + F5 强制刷新\n十一、故障速查表\n报错现象 可能原因 解决办法 hugo 报错找不到配置文件 不在 main 分支 执行 git checkout main hugo 只生成 5 个页面 主题丢失 重新复制 PaperMod 到 themes/ git push 网络超时 GitHub 连接不稳定 多试几次，或换 SSH 方式 首页不显示新文章 draft 没改成 false 打开文章文件检查 点击文章 404 baseURL 写错了 检查 hugo.toml 里的地址 docs 文件夹不存在 忘了执行第六步 执行 Move-Item -Path public -Destination docs 十二、记住这 6 条命令就够了\n每次发文章，按顺序执行：\nhugo new content posts/文章名.md （编辑文章，改 draft 为 false） hugo --minify --cleanDestinationDir Remove-Item -Recurse -Force docs Move-Item -Path public -Destination docs git add docs/ git commit -m \"发布新文章\" git push origin main 十三、总结\n又折腾了半天终于把第二篇文章成功发布到了博客上，虽然过程很曲折，但每踩一个坑，就对这套工具的理解更深一层 现在我有了一套稳定的发布流程，以后发文章只需要按步骤执行就行，不会再出问题了\n","wordCount":"538","inLanguage":"en","datePublished":"2026-07-30T18:59:53+08:00","dateModified":"2026-07-30T18:59:53+08:00","author":{"@type":"Person","name":"Daylily"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://daylily-7.github.io/posts/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/"},"publisher":{"@type":"Organization","name":"Daylily's Blog","logo":{"@type":"ImageObject","url":"https://daylily-7.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://daylily-7.github.io/ accesskey=h title="Daylily's Blog (Alt + H)">Daylily's Blog</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://daylily-7.github.io/ title=首页><span>首页</span></a></li><li><a href=https://daylily-7.github.io/posts/ title=归档><span>归档</span></a></li><li><a href=https://daylily-7.github.io/categories/ title=分类><span>分类</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">个人博客出现的问题及解决</h1></header><div class="post-content md-content"><p>2026年7月29日，我花了大半天时间，只为把第二篇文章发布到博客上。从404到首页不显示，从文件丢失到网络超时，这篇文章记录了我遇到的所有问题和解决办法</p><hr><p>一、坑一：文章发布后，首页不显示</p><p>*问题现象：
+执行完 <code>hugo</code> 和 <code>git push</code> 后，访问博客首页，只能看到第一篇文章，第二篇文章没有出现
+*排查过程：
+第一步，检查 <code>content/posts/</code> 文件夹里是否有第二篇文章的文件</p><pre tabindex=0><code>ls content/posts/
+</code></pre><p>文件存在，说明没有丢失</p><p>第二步，检查文章的 <code>draft</code> 状态</p><pre tabindex=0><code>notepad content/posts/build-blog-notes.md
+</code></pre><p>查看文件开头的 <code>draft</code> 字段（如果是 <code>true</code>，Hugo 就不会生成它，必须改成 <code>false</code>）但是已经被我改成false了，这里没问题</p><p>第三步，检查 <code>public/posts/</code> 文件夹</p><pre tabindex=0><code>ls public/posts/
+</code></pre><p>（如果没有第二篇文章对应的文件夹，说明 <code>hugo</code> 命令没有正确生成它）显示找不到该文件夹</p><p>*解决办法：
+确保 <code>draft: false</code> 后，重新执行：</p><pre tabindex=0><code>hugo --minify --cleanDestinationDir
+</code></pre><p>然后再检查 <code>public/posts/</code>，才确认生成了文章文件夹</p><hr><p>二、坑二：主题文件夹丢失
+*问题现象：
+执行 <code>hugo</code> 时，报错说找不到布局文件</p><pre tabindex=0><code>WARN found no layout file for &#34;html&#34; for kind &#34;home&#34;
+</code></pre><p>*原因分析：
+<code>themes/PaperMod</code> 文件夹被清空或不存在了，我怀疑是在 <code>main</code> 分支和 <code>gh-pages</code> 分支之间切换时，文件被覆盖或丢失了</p><p>*解决办法：
+重新把主题文件夹放回 <code>themes/</code> 目录
+第一步，确认主题文件夹是否存在</p><pre tabindex=0><code>ls themes
+</code></pre><p>发现 <code>PaperMod</code> 是空的，又需要把它重新放进去</p><p>第二步，从 GitHub 下载主题 ZIP 包
+访问：https://github.com/adityatelange/hugo-PaperMod/archive/refs/heads/master.zip</p><p>第三步，解压后重命名为 <code>PaperMod</code>，复制到 <code>my-blog/themes/</code> 里面</p><p>第四步，确认主题已就位</p><pre tabindex=0><code>ls themes\PaperMod\layouts
+</code></pre><p>可以看到 <code>_default</code>、<code>_partials</code>、<code>_shortcodes</code> 等文件夹就OK的</p><hr><p>三、坑三：点击文章链接出现 404
+*问题现象：
+首页显示了两篇文章的标题，但点击任意一篇文章，都跳转到 404 页面</p><p>*原因分析：
+<code>hugo.toml</code> 里的 <code>baseURL</code> 写错了。我的 GitHub Pages 地址是 <code>daylily-7.github.io</code>，但配置里写的是 <code>Daylily.github.io</code></p><p>*解决办法：</p><p>打开 <code>hugo.toml</code>，把第一行改成正确的地址</p><pre tabindex=0><code>baseURL = &#34;https://daylily-7.github.io/&#34;
+</code></pre><p>修改后重新生成并部署：</p><pre tabindex=0><code>hugo --minify --cleanDestinationDir
+</code></pre><p>然后重新推送</p><p><strong>注意</strong>：我这样改完之后反而变成全站 404，应该是 <code>gh-pages</code> 分支被覆盖了，要重新部署一次</p><hr><p>四、坑四：配置文件 <code>hugo.toml</code> 经常消失</p><p>*问题现象：
+明明刚创建了 <code>hugo.toml</code>，执行 <code>hugo</code> 时却报错找不到配置文件</p><pre tabindex=0><code>ERROR Unable to locate config file
+</code></pre><p>*原因分析：
+<code>hugo.toml</code> 属于 <code>main</code> 分支（源码分支），而 <code>gh-pages</code> 分支只存放生成的网页文件，当执行 <code>git checkout gh-pages</code> 时，工作目录切换到了 <code>gh-pages</code> 分支的内容，此时<code>hugo.toml</code> 自然就消失了，切回 <code>main</code> 分支才会回来</p><p>*解决办法：
+确认当前分支，切回 <code>main</code></p><pre tabindex=0><code>git branch
+git checkout main
+</code></pre><p>然后重新创建 <code>hugo.toml</code>（发现确实丢了</p><pre tabindex=0><code>notepad hugo.toml
+</code></pre><p>把配置内容粘贴进去，保存</p><hr><p>五、坑五：<code>git push</code> 网络超时
+*问题现象：
+执行 <code>git push origin main</code> 时，报错：</p><pre tabindex=0><code>fatal: unable to access &#39;https://github.com/...&#39;: Failed to connect to github.com:443
+</code></pre><p>*原因分析：
+GitHub 在国内访问不稳定，网络连接经常被重置</p><p>*解决办法：
+<strong>方案一：多试几次</strong></p><pre tabindex=0><code>git push origin main
+</code></pre><p>连续尝试 3-5 次，有时候重试就能成功（我通过反复尝试成功了）</p><p><strong>方案二：换用 SSH 方式</strong></p><pre tabindex=0><code>git remote set-url origin git@github.com:Daylily-7/Daylily-7.github.io.git
+git push origin main
+</code></pre><hr><p>六、总结最终成功部署的完整流程：
+第一步，确认在 <code>main</code> 分支</p><pre tabindex=0><code>git checkout main
+</code></pre><p>第二步，确认主题和配置文件都存在</p><pre tabindex=0><code>ls themes\PaperMod\layouts
+ls hugo.toml
+</code></pre><p>第三步，生成网站文件</p><pre tabindex=0><code>hugo --minify --cleanDestinationDir
+</code></pre><p>第四步，删除旧的 <code>docs</code> 文件夹，用 <code>public</code> 替换</p><pre tabindex=0><code>Remove-Item -Recurse -Force docs
+Move-Item -Path public -Destination docs
+</code></pre><p>第五步，添加到 Git 并推送</p><pre tabindex=0><code>git add docs/
+git commit -m &#34;更新博客&#34;
+git push origin main
+</code></pre><p>第六步，等待 1-2 分钟，刷新博客</p><p><code>https://daylily-7.github.io</code></p><hr><p>七、关于 <code>gh-pages</code> 和 <code>docs</code> 的选择</p><p>一开始我用了 <code>gh-pages</code> 分支来部署，但反复出现 404 和各种问题。后来我改用了 <code>docs</code> 文件夹方式（把网站文件放在 <code>main</code> 分支的 <code>docs</code> 文件夹里），然后在 GitHub Pages 设置中把分支指向 <code>main</code>、文件夹指向 <code>/docs</code></p><p>这种方式更稳定，不容易出现分支切换导致文件丢失的问题</p><hr><p>八、经验总结</p><p>1.遇到 404 先检查 <code>baseURL</code> 是否正确</p><p>2.主题文件丢失是常见问题，尤其是在分支切换后，记得重新确认<code>themes/PaperMod/layouts</code> 是否存在</p><p>3.<code>hugo.toml</code> 配置文件只存在于 <code>main</code> 分支，切到 <code>gh-pages</code> 分支后是看不到的，这是正常的。</p><p>4.<code>git push</code> 网络超时是 GitHub 在国内的常态，多试几次或换 SSH 方式</p><p>5.部署前一定要检查 <code>public/posts/</code> 里是否生成了文章对应的文件夹</p><hr><p>九、为什么我之前会出问题以及如何避免</p><p>*我的问题根源：分支切换导致文件混乱</p><p>我的博客仓库有两个主要分支：</p><ul><li><strong><code>main</code> 分支</strong>：存放原材料（文章 Markdown 文件、主题、配置文件 <code>hugo.toml</code>）</li><li><strong><code>gh-pages</code> 分支</strong>：存放成品（<code>hugo</code> 生成的 HTML 网页文件）</li></ul><p>我之前发布文章的流程是这样的：</p><ol><li>在 <code>main</code> 分支写文章，执行 <code>hugo</code>（生成 <code>public</code> 文件夹）</li><li>切换到 <code>gh-pages</code> 分支，把 <code>public</code> 里的文件复制过去</li><li>切回 <code>main</code> 分支修改配置</li><li>又切到 <code>gh-pages</code> 分支……</li></ol><p>来回切换几次后，Git 会提示文件冲突，拒绝切换。然后我执行了 <code>git rm -rf .</code> 强行清空，结果把当前分支的所有文件都删了</p><p><strong>最终结果</strong>：<code>main</code> 分支的原材料被清空，<code>gh-pages</code> 分支的成品也不完整，主页自然就 404 了</p><p>*我现在用的方式：单分支 + docs 文件夹</p><p>为了避免分支切换导致的问题，我现在改用更稳定的方式：</p><ul><li><strong>永远在 <code>main</code> 分支工作</strong></li><li><strong>生成的成品放在 <code>docs</code> 文件夹里</strong>（而不是另一个分支）</li><li><strong><code>git push</code> 把原材料和成品一起推上去</strong></li></ul><p>这样就不存在“来回切换导致文件丢失”的问题了。</p><hr><p>十、标准发布流程</p><p><strong>第一步：确认在 main 分支</strong></p><pre tabindex=0><code>git checkout main
+</code></pre><p><strong>第二步：写文章</strong></p><pre tabindex=0><code>hugo new content posts/文章名.md
+</code></pre><blockquote><p>注意：文章名建议用英文，比如 <code>my-third-post.md</code>，避免中文编码问题</p></blockquote><p><strong>第三步：编辑文章</strong></p><pre tabindex=0><code>notepad content/posts/文章名.md
+</code></pre><p>做两件事：</p><ol><li>把 <code>draft: true</code> 改成 <code>draft: false</code></li><li>在 <code>---</code> 下方写正文</li></ol><p>保存并关闭</p><p><strong>第四步：检查主题是否存在（防止主题丢失）</strong></p><pre tabindex=0><code>ls themes\PaperMod\layouts
+</code></pre><p>如果提示找不到路径，说明主题丢了。把 <code>PaperMod</code> 文件夹重新复制到 <code>themes\</code> 里。</p><p><strong>第五步：生成网站文件</strong></p><pre tabindex=0><code>hugo --minify --cleanDestinationDir
+</code></pre><p>看输出结果里的 <code>Pages</code> 数量，应该是 8 或 11 个左右。如果只有 5 个，说明主题没加载上，回到第四步</p><p><strong>第六步：替换 docs 文件夹</strong></p><pre tabindex=0><code>Remove-Item -Recurse -Force docs
+Move-Item -Path public -Destination docs
+</code></pre><p><strong>第七步：提交并推送</strong></p><pre tabindex=0><code>git add docs/
+git commit -m &#34;发布新文章&#34;
+git push origin main
+</code></pre><p>看输出里有没有 <code>main -> main</code>，如果有，说明推送成功了</p><p><strong>第八步：刷新博客</strong></p><p>等待 1-2 分钟，访问 <code>https://你的用户名.github.io</code>，按 <code>Ctrl + F5</code> 强制刷新</p><hr><p>十一、故障速查表</p><table><thead><tr><th>报错现象</th><th>可能原因</th><th>解决办法</th></tr></thead><tbody><tr><td><code>hugo</code> 报错找不到配置文件</td><td>不在 <code>main</code> 分支</td><td>执行 <code>git checkout main</code></td></tr><tr><td><code>hugo</code> 只生成 5 个页面</td><td>主题丢失</td><td>重新复制 <code>PaperMod</code> 到 <code>themes/</code></td></tr><tr><td><code>git push</code> 网络超时</td><td>GitHub 连接不稳定</td><td>多试几次，或换 SSH 方式</td></tr><tr><td>首页不显示新文章</td><td><code>draft</code> 没改成 <code>false</code></td><td>打开文章文件检查</td></tr><tr><td>点击文章 404</td><td><code>baseURL</code> 写错了</td><td>检查 <code>hugo.toml</code> 里的地址</td></tr><tr><td><code>docs</code> 文件夹不存在</td><td>忘了执行第六步</td><td>执行 <code>Move-Item -Path public -Destination docs</code></td></tr></tbody></table><hr><p>十二、记住这 6 条命令就够了</p><p>每次发文章，按顺序执行：</p><pre tabindex=0><code>hugo new content posts/文章名.md
+（编辑文章，改 draft 为 false）
+
+hugo --minify --cleanDestinationDir
+Remove-Item -Recurse -Force docs
+Move-Item -Path public -Destination docs
+
+git add docs/
+git commit -m &#34;发布新文章&#34;
+git push origin main
+</code></pre><hr><p>十三、总结</p><p>又折腾了半天终于把第二篇文章成功发布到了博客上，虽然过程很曲折，但每踩一个坑，就对这套工具的理解更深一层
+现在我有了一套稳定的发布流程，以后发文章只需要按步骤执行就行，不会再出问题了</p><hr></div><footer class=post-footer><ul class=post-tags></ul></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://daylily-7.github.io/>Daylily's Blog</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10)),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var toplink=document.getElementById("top-link");window.onscroll=function(){const e=window.innerHeight;document.body.scrollTop>e||document.documentElement.scrollTop>e?toplink.classList.remove("hidden"):toplink.classList.add("hidden")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script></body></html>
