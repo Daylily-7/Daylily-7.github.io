@@ -1,0 +1,30 @@
+baseURL = "https://daylily-7.github.io/"
+title = "Daylily's Blog"
+theme = "PaperMod"
+languageCode = "zh-cn"
+
+[params]
+    description = "Record study and thinking."
+    author = "Daylily"
+    hideMeta = true
+    showPosts = true
+
+    [params.homeInfoParams]
+        title = "Welcome to Daylily's blog——"
+        content = "Here I keep my study‑notes, discoveries and thoughts. Feel free to communicate!"
+        imageUrl = "/avatar.jpg  "
+
+[[menu.main]]
+    name = "首页"
+    url = "/"
+    weight = 1
+
+[[menu.main]]
+    name = "归档"
+    url = "/posts/"
+    weight = 2
+
+[[menu.main]]
+    name = "分类"
+    url = "/categories/"
+    weight = 3
